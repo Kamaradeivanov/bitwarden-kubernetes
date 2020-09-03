@@ -1,0 +1,15 @@
+kind: Kustomization
+nameSuffix: -mssql
+commonLabels:
+  app: bitwarden-mssql
+resources:
+  - configmap.yml
+  - deployment.yml
+  - pvc.yml
+  - service.yml
+bases:
+  - ../global
+secretGenerator:
+  - name: bitwarden-secret
+    type: Opaque
+    env: .env

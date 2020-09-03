@@ -1,0 +1,10 @@
+kind: Kustomization
+nameSuffix: -nginx
+commonLabels:
+  app: bitwarden-nginx
+resources:
+  - configmap.yml
+  - deployment.yml
+  - service.yml
+bases:
+  - ../global

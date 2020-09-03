@@ -1,0 +1,9 @@
+kind: Kustomization
+commonLabels:
+  app: bitwarden-icons
+nameSuffix: -icons
+resources:
+  - service.yml
+  - deployment.yml
+bases:
+  - ../global

@@ -1,0 +1,10 @@
+kind: Kustomization
+nameSuffix: -web
+commonLabels:
+  app: bitwarden-web
+resources:
+  - configmap.yml
+  - deployment.yml
+  - service.yml
+bases:
+  - ../global

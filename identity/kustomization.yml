@@ -1,0 +1,15 @@
+kind: Kustomization
+nameSuffix: -identity
+commonLabels:
+  app: bitwarden-identity
+bases:
+  - ../global
+resources:
+  - service.yml
+  - deployment.yml
+secretGenerator:
+  - name: bitwarden-pfx-secret
+    files:
+      - identity.pfx
+  - name: bitwarden-secret
+    env: .env

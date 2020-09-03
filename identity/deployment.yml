@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bitwarden
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {}
+  template:
+    spec:
+      # securityContext:
+      #   fsGroup: 1000
+      #   runAsUser: 1000
+      containers:
+        - name: bitwarden-identity
+          image: bitwarden/identity:1.36.1
+          imagePullPolicy: IfNotPresent
+          resources:
+          envFrom:
+          - configMapRef:
+              name: bitwarden-global
+          - secretRef:
+              name: bitwarden-global-secret
+          - secretRef:
+              name: bitwarden-secret
+          ports:
+            - name: http
+              containerPort: 5000
+              protocol: TCP
+          # livenessProbe:
+          #   initialDelaySeconds: 10
+          #   httpGet:
+          #     path: /
+          #     port: 5000
+          # readinessProbe:
+          #   initialDelaySeconds: 10
+          #   httpGet:
+          #     path: /
+          #     port: 5000
+          volumeMounts:
+            - mountPath: /etc/bitwarden/core
+              name: data
+            - mountPath: /etc/bitwarden/identity
+              name: identity-pfx
+      volumes:
+        - name:  data
+          emptyDir: {}
+        - name: identity-pfx
+          secret:
+              secretName: bitwarden-pfx-secret

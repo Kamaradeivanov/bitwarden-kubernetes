@@ -1,0 +1,11 @@
+kind: Kustomization
+resources:
+  - configmap.yml
+configMapGenerator:
+  - name: bitwarden-global
+    behavior: merge
+    env: configmap.env
+secretGenerator:
+  - name: bitwarden-global-secret
+    behavior: create
+    env: secret.env

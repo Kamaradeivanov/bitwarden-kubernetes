@@ -1,0 +1,9 @@
+kind: Kustomization
+nameSuffix: -notifications
+commonLabels:
+  app: bitwarden-notifications
+bases:
+  - ../global
+resources:
+  - service.yml
+  - deployment.yml

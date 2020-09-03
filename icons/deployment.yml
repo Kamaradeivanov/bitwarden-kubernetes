@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bitwarden
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {}
+  template:
+    spec:
+      # securityContext:
+      #   fsGroup: 1000
+      #   runAsUser: 1000
+      containers:
+        - name: bitwarden-icons
+          image: bitwarden/icons:1.36.1
+          imagePullPolicy: IfNotPresent
+          resources:
+          envFrom:
+          - configMapRef:
+              name: bitwarden-global
+          ports:
+            - name: http
+              containerPort: 5000
+              protocol: TCP
+          # livenessProbe:
+          #   initialDelaySeconds: 30
+          #   httpGet:
+          #     path: /
+          #     port: 5000
+          # readinessProbe:
+          #   initialDelaySeconds: 30
+          #   httpGet:
+          #     path: /
+          #     port: 5000

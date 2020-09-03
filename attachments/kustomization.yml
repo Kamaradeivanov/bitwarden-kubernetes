@@ -1,0 +1,9 @@
+kind: Kustomization
+nameSuffix: -attachments
+commonLabels:
+  app: bitwarden-attachments
+resources:
+  - service.yml
+  - deployment.yml
+bases:
+  - ../global

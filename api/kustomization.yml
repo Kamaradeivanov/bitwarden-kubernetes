@@ -1,0 +1,9 @@
+kind: Kustomization
+nameSuffix: -api
+commonLabels:
+  app: bitwarden-api
+bases:
+  - ../global
+resources:
+  - service.yml
+  - deployment.yml

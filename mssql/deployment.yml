@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bitwarden
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {}
+  template:
+    spec:
+      # securityContext:
+      #   fsGroup: 1000
+      #   runAsUser: 1000
+      containers:
+        - name: bitwarden-mssql
+          image: bitwarden/mssql:1.36.1
+          imagePullPolicy: IfNotPresent
+          resources:
+          envFrom:
+          - configMapRef:
+              name: bitwarden-global
+          - configMapRef:
+              name: bitwarden
+          - secretRef:
+              name: bitwarden-secret
+          ports:
+            - name: http
+              containerPort: 1433
+              protocol: TCP
+          livenessProbe:
+            initialDelaySeconds: 10
+            tcpSocket:
+              port: 1433
+          readinessProbe:
+            initialDelaySeconds: 10
+            tcpSocket:
+              port: 1433
+          volumeMounts:
+            - mountPath: /var/opt/mssql/data
+              name: mssql-data
+            - mountPath: /etc/bitwarden/mssql/backups
+              name: backup
+      volumes:
+        - name: mssql-data
+          persistentVolumeClaim:
+              claimName: bitwarden
+        - name:  backup
+          emptyDir: {}

@@ -1,0 +1,8 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bitwarden
+data:
+  ACCEPT_EULA: 'Y'
+  MSSQL_PID: 'Express'

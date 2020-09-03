@@ -1,0 +1,34 @@
+kind: Kustomization
+bases:
+  - ./admin
+  - ./api
+  - ./attachments
+  - ./events
+  - ./icons
+  - ./identity
+  - ./mssql
+  - ./nginx
+  - ./notifications
+  - ./web
+resources:
+  - ingress.yml
+patchesJson6902:
+  - path: ingress_patch.yml
+    target:
+      group: extensions
+      kind: Ingress
+      name: bitwarden
+      version: v1beta1
+images:
+  - name: bitwarden/admin
+    newTag: 1.36.1
+  - name: bitwarden/api
+    newTag: 1.36.1
+  - name: bitwarden/attachments
+    newTag: 1.36.1
+  - name: bitwarden/icons
+    newTag: 1.36.1
+  - name: bitwarden/identity
+    newTag: 1.36.1
+  - name: bitwarden/web
+    newTag: 2.15.1

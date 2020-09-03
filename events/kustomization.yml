@@ -1,0 +1,9 @@
+kind: Kustomization
+nameSuffix: -events
+commonLabels:
+  app: bitwarden-events
+bases:
+  - ../global
+resources:
+  - service.yml
+  - deployment.yml

@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bitwarden-global
+  labels:
+    app: bitwarden-global
+data:
+  LOCAL_UID: '1000'
+  LOCAL_GID: '1000'
+  ASPNETCORE_ENVIRONMENT: Production
+  globalSettings__attachment__baseDirectory: /etc/bitwarden/core/attachments
+  globalSettings__baseServiceUri__internalNotifications: http://bitwarden-notifications:5000
+  globalSettings__baseServiceUri__internalAdmin: http://bitwarden-admin:5000
+  globalSettings__baseServiceUri__internalIdentity: http://bitwarden-identity:5000
+  globalSettings__baseServiceUri__internalApi: http://bitwarden-api:5000
+  globalSettings__baseServiceUri__internalVault: http://bitwarden-web:5000
+  globalSettings__baseServiceUri__internalSso: http://bitwarden-sso:5000
+  globalSettings__dataProtection__directory: /etc/bitwarden/core/aspnet-dataprotection
+  globalSettings__installation__identityUri: https://identity.bitwarden.com
+  globalSettings__licenseDirectory: /etc/bitwarden/core/licenses
+  globalSettings__logDirectory: /etc/bitwarden/logs
+  globalSettings__logRollBySizeLimit: '60'
+  globalSettings__pushRelayBaseUri: https://push.bitwarden.com
+  globalSettings__selfHosted: 'true'
+  globalSettings__syslog__destination: ''

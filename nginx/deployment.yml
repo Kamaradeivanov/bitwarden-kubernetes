@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bitwarden
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {}
+  template:
+    spec:
+      # securityContext:
+      #   fsGroup: 1000
+      #   runAsUser: 1000
+      containers:
+        - name: bitwarden-nginx
+          image: bitwarden/nginx:1.36.1
+          imagePullPolicy: IfNotPresent
+          resources:
+          envFrom:
+          - configMapRef:
+              name: bitwarden-global
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            initialDelaySeconds: 10
+            httpGet:
+              path: /
+              port: 8080
+          readinessProbe:
+            initialDelaySeconds: 10
+            httpGet:
+              path: /
+              port: 8080
+          volumeMounts:
+            - mountPath: /var/log/nginx
+              name: log
+            - mountPath: /etc/bitwarden/nginx
+              name: bitwarden-nginx
+      volumes:
+        - name: log
+          emptyDir: {}
+        - name:  bitwarden-nginx
+          configMap:
+              name: bitwarden-nginx

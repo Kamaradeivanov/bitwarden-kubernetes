@@ -1,0 +1,9 @@
+kind: Kustomization
+commonLabels:
+  app: bitwarden-admin
+nameSuffix: -admin
+bases:
+  - ../global
+resources:
+  - service.yml
+  - deployment.yml
