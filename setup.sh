@@ -63,7 +63,7 @@ function generateConfiguration() {
   echo "Generate identity.pfx file and password"
   IDENTITY_CERT_PASSWORD=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c70)
   openssl req -x509 -newkey rsa:4096 -sha256 -nodes -keyout identity.key -out identity.crt -subj "/CN=Bitwarden IdentityServer" -days 10950
-  openssl pkcs12 -export -out ./identity/identity.pfx -inkey identity.key -in identity.crt -certfile identity.crt -passout pass:$IDENTITY_CERT_PASSWORD
+  openssl pkcs12 -export -out ./identity/identity.pfx -inkey identity.key -in identity.crt -passout pass:$IDENTITY_CERT_PASSWORD
   rm identity.key identity.crt
   sed -i s/globalSettings__identityServer__certificatePassword=\.\*/globalSettings__identityServer__certificatePassword=$IDENTITY_CERT_PASSWORD/g ./identity/.env
 
